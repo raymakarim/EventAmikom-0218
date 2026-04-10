@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -20,6 +21,11 @@
         @endif
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+        <div class="absolute top-0 left-0 w-full bg-[#18181b] border-b border-gray-800 py-3 px-6 text-center text-sm text-gray-300 z-50 shadow-sm">
+        <span class="font-semibold text-white">Nama:Roid Makarim Taqillah Raysyawal</span>
+        <span class="font-semibold text-white">NIM:24.62.0218</span> 
+        <span class="font-semibold text-white">Kelas:BCIS 2024</span>
+    </div>
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
             @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
