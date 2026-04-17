@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\CategoryController;
 
 
 
@@ -40,6 +41,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::get('/', [DashboardController::class,'index'])->name('dashboard');
 Route::get('/events', [EventController::class,'indexAdmin'])->name('events.index');
 Route::get('/transactions', [TransactionController::class,'index'])->name('transaction.index');
+Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories');
 // dan seterusnya...
 });
 
