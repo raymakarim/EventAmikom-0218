@@ -41,7 +41,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::get('/', [DashboardController::class,'index'])->name('dashboard');
 Route::get('/events', [EventController::class,'indexAdmin'])->name('events.index');
 Route::get('/transactions', [TransactionController::class,'index'])->name('transaction.index');
-Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
 // dan seterusnya...
 });
 
