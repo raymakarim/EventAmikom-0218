@@ -28,3 +28,6 @@ Detail Events :
 https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/event/1
 Checkout :
 https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/checkout
+
+Tugas 3 :
+https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin/categories
