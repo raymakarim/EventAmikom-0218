@@ -29,8 +29,7 @@ https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/event/1
 Checkout :
 https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/checkout
 
-Tugas 3 :
 https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin/categories
 
-TUGAS 4 SUDAH SELESAI (SEEDING DAN MIGRASI DATABASE UNTUK HASIL SCREENSHOT DIBAWAH)
+TUGAS 3 SUDAH SELESAI (SEEDING DAN MIGRASI DATABASE UNTUK HASIL SCREENSHOT DIBAWAH)
 https://imgur.com/a/l5J8cVL
