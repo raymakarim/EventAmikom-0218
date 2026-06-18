@@ -8,10 +8,12 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EventController as EventAdminController;
 use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\AuthController; // Tambahan untuk fungsi Login
 
 
-
-
+// ==========================================
+// RUTE FRONTEND / USER AREA (TIDAK DIUBAH)
+// ==========================================
 Route::get('/tentang', function () {
     return '<h1>Ini adalah halaman tentang aplikasi event hub</h1>';
 });
@@ -32,25 +34,40 @@ Route::get('/bantuan', function () {
     return view('bantuan');
 });
 
-// Rute User Area
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/event/1', [EventController::class, 'show'])->name('events.show');
 Route::get('/checkout', [EventController::class,'checkout'])->name('checkout');
 Route::get('/my-ticket', [EventController::class, 'ticket'])->name('ticket');
 
 
-// Rute Admin area
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-Route::get('/', [DashboardController::class,'index'])->name('dashboard');
-Route::resource('events', EventAdminController::class);
-Route::resource('categories', CategoryController::class);
-Route::resource('partners', PartnerController::class);
-//Route::get('/events', [EventAdminController::class,'index'])->name('events.index');
-//Route::get('/events/create', [EventAdminController::class,'create'])->name('events.create');
-//Route::get('/events/edit', [EventAdminController::class,'edit'])->name('events.edit');
-//Route::get('/events/destroy', [EventAdminController::class,'destroy'])->name('events.destroy');
-// Route::get('/transactions', [TransactionController::class,'index'])->name('transaction.index');
-// Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-// dan seterusnya...
-});
+// ==========================================
+// RUTE AUTH & ADMIN AREA
+// ==========================================
 
+// Menangkap akses sembarangan ke /login agar dilempar ke login admin
+Route::get('/login', function () {
+    return redirect()->route('admin.login');
+})->name('login');
+
+// Grouping untuk URL berawalan /admin
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+
+    // 1. Rute Login (Bebas Diakses tanpa perlu login dulu)
+    Route::get('login', [AuthController::class, 'showLogin'])->name('login'); 
+    Route::post('login', [AuthController::class, 'login'])->name('login.post'); 
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    // 2. Rute Dalam Admin (DIKUNCI OLEH MIDDLEWARE)
+    Route::middleware(['auth', 'admin'])->group(function () {
+        
+        // Rute dashboard lama kamu (akses via /admin)
+        Route::get('/', [DashboardController::class,'index'])->name('dashboard');
+        // Rute dashboard modul (akses via /admin/dashboard)
+        Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard.alt');
+
+        Route::resource('events', EventAdminController::class);
+        Route::resource('categories', CategoryController::class);
+        Route::resource('partners', PartnerController::class);
+        // Route::get('/transactions', [TransactionController::class,'index'])->name('transaction.index');
+    });
+});
