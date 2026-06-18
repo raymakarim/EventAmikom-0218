@@ -37,3 +37,7 @@ https://imgur.com/a/l5J8cVL
 TUGAS 4 :
 https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin/events
 https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin
+
+
+PELANJUTAN SETELAH UTS DAN TUGAS 8 SELESAI :
+https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin/login
