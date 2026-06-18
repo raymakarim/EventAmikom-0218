@@ -1,101 +1,58 @@
 @extends('layouts.admin')
 
 @section('content')
-<main class="flex-1 p-10 overflow-y-auto">
+<main class="flex-1 p-10">
     <header class="flex justify-between items-center mb-10">
         <div>
             <h1 class="text-3xl font-black">Kelola Kategori</h1>
             <p class="text-slate-500 font-medium">Buat dan atur kategori acara Anda di sini.</p>
         </div>
-        <button
-            class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 active:scale-95 transition">
+        <a href="{{ route('admin.categories.create') }}"
+            class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition">
             + Tambah Kategori Baru
-        </button>
+        </a>
     </header>
 
     <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
-        <div class="px-8 py-6 bg-slate-50/50 border-b flex gap-4">
-            <input type="text" placeholder="Cari kategori..."
-                class="flex-1 px-5 py-3 rounded-xl border-slate-200 border bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition">
-        </div>
+        <form action="{{ route('admin.categories.index') }}" method="GET" class="px-8 py-6 bg-slate-50/50 border-b flex gap-4">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kategori..."
+                class="flex-1 px-5 py-3 rounded-xl border-slate-200 border focus:ring-2 focus:ring-indigo-500 outline-none transition">
+            <button type="submit" class="px-6 py-3 bg-slate-800 text-white rounded-xl font-bold">Cari</button>
+        </form>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead class="bg-slate-50 text-slate-400 uppercase text-[10px] font-black tracking-widest">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50 text-slate-400 text-[10px] font-black tracking-widest uppercase">
                     <tr>
-                        <th class="px-8 py-4 w-16">No</th>
+                        <th class="px-8 py-4">No</th>
                         <th class="px-8 py-4">Nama Kategori</th>
-                        <th class="px-8 py-4">Deskripsi Singkat</th>
+                        <th class="px-8 py-4">Slug (URL)</th>
                         <th class="px-8 py-4">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y border-t">
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="px-8 py-6 font-bold text-slate-400">1</td>
-                        <td class="px-8 py-6">
-                            <p class="font-black text-slate-800">Seminar</p>
-                        </td>
-                        <td class="px-8 py-6">
-                            <p class="text-sm text-slate-500">Kategori untuk acara diskusi, talkshow, dan seminar pendidikan.</p>
-                        </td>
+                <tbody class="divide-y">
+                    @forelse ($categories as $index => $category)
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="px-8 py-6 text-slate-400">{{ $categories->firstItem() + $index }}</td>
+                        <td class="px-8 py-6 font-black text-slate-800">{{ $category->name }}</td>
+                        <td class="px-8 py-6 text-slate-500 text-sm">{{ $category->slug }}</td>
                         <td class="px-8 py-6">
                             <div class="flex gap-2">
-                                <button title="Edit Kategori" class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 00-2 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                    </svg>
-                                </button>
-                                <button title="Hapus Kategori" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                    </svg>
-                                </button>
+                                <a href="{{ route('admin.categories.edit', $category->id) }}" class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">Edit</a>
+                                <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Hapus?')">
+                                    @csrf @method('DELETE')
+                                    <button class="p-2 bg-rose-50 text-rose-600 rounded-lg">Hapus</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
-                    
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="px-8 py-6 font-bold text-slate-400">2</td>
-                        <td class="px-8 py-6">
-                            <p class="font-black text-slate-800">Konser</p>
-                        </td>
-                        <td class="px-8 py-6">
-                            <p class="text-sm text-slate-500">Kategori untuk acara hiburan musik dan festival band.</p>
-                        </td>
-                        <td class="px-8 py-6">
-                            <div class="flex gap-2">
-                                <button class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 00-2 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                </button>
-                                <button class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="px-8 py-6 font-bold text-slate-400">3</td>
-                        <td class="px-8 py-6">
-                            <p class="font-black text-slate-800">Workshop</p>
-                        </td>
-                        <td class="px-8 py-6">
-                            <p class="text-sm text-slate-500">Kategori untuk pelatihan keterampilan praktis dan bootcamp.</p>
-                        </td>
-                        <td class="px-8 py-6">
-                            <div class="flex gap-2">
-                                <button class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 00-2 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                </button>
-                                <button class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    @empty
+                    <tr><td colspan="4" class="p-8 text-center text-slate-500">Data tidak ditemukan.</td></tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
+        <div class="p-4">{{ $categories->links() }}</div>
     </div>
 </main>
 @endsection
