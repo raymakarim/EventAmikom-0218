@@ -8,8 +8,8 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EventController as EventAdminController;
 use App\Http\Controllers\Admin\PartnerController;
-use App\Http\Controllers\Admin\AuthController; // Tambahan untuk fungsi Login
-
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\CheckoutController;
 
 // ==========================================
 // RUTE FRONTEND / USER AREA (TIDAK DIUBAH)
@@ -35,8 +35,12 @@ Route::get('/bantuan', function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/event/1', [EventController::class, 'show'])->name('events.show');
-Route::get('/checkout', [EventController::class,'checkout'])->name('checkout');
+
+// PERBAIKAN: Mengubah /event/1 menjadi dinamis /event/{event}
+Route::get('/event/{event}', [EventController::class, 'show'])->name('events.show'); 
+
+Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('checkout.create');
+Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::get('/my-ticket', [EventController::class, 'ticket'])->name('ticket');
 
 
@@ -68,6 +72,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('events', EventAdminController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('partners', PartnerController::class);
-        // Route::get('/transactions', [TransactionController::class,'index'])->name('transaction.index');
+        Route::get('transactions', [\App\Http\Controllers\Admin\TransactionController::class, 'index'])->name('transactions.index');
     });
 });

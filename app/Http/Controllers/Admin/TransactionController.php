@@ -9,6 +9,7 @@ class TransactionController extends Controller
 {
    public function index()
     {
-        return view('admin/transactions');
+       $transactions = \App\Models\Transaction::with('event')->latest()->paginate(20);
+        return view('admin.transactions.index', compact('transactions'));
     }
 }

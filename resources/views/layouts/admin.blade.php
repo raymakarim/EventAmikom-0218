@@ -32,10 +32,14 @@
                 Kelola Kategori
             </a>
             <a href="{{ route('admin.partners.index') }}" 
-            class="flex items-center gap-3 px-4 py-3 hover:bg-indigo-800 rounded-xl font-bold transition {{ request()->routeIs('admin.partners.*') ? 'bg-indigo-800 text-white' : '' }}">
+                class="flex items-center gap-3 px-4 py-3 hover:bg-indigo-800 rounded-xl font-bold transition {{ request()->routeIs('admin.partners.*') ? 'bg-indigo-800 text-white' : '' }}">
                 Kelola Partner
             </a>
-        </nav>
+            <a href="{{ route('admin.transactions.index') }}" 
+                 class="flex items-center gap-3 px-4 py-3 hover:bg-indigo-800 rounded-xl font-bold transition {{ request()->routeIs('admin.transactions.*') ? 'bg-indigo-800 text-white' : '' }}">
+                 Kelola Transaksi
+             </a>
+        </nav>         
                 <div class="pt-6 border-t border-indigo-800">
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
