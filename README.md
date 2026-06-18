@@ -41,3 +41,6 @@ https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin
 
 PELANJUTAN SETELAH UTS DAN TUGAS 8 SELESAI :
 https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin/login
+
+TUGAS 10 :
+https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin/transactions
