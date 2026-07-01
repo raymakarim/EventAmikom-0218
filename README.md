@@ -44,3 +44,7 @@ https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin/login
 
 TUGAS 10 :
 https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/admin/transactions
+
+
+TUGAS 11 :
+https://eventamikom-0218-main-sxrcmj.free.laravel.cloud/checkout/6
